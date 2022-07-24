@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mappers\AuthorsMapper;
 use App\Services\RemoteEntities\AuthorService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -12,8 +13,11 @@ class AuthorController extends Controller
 {
     public function index(Request $request): Factory|View|Application
     {
+        $authorsData = AuthorService::fetchData();
+
+        // TODO: pagination
         return view('authors.index', [
-            'authors' => AuthorService::fetchData()
+            'authors' => AuthorsMapper::stdObjectsToAuthors($authorsData->items),
         ]);
     }
 }

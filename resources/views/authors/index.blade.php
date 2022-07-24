@@ -29,13 +29,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($authors->items as $author)
+                                                @foreach($authors as $author)
                                                     <tr>
-                                                        <td>{{ $author->first_name }}</td>
-                                                        <td>{{ $author->last_name }}</td>
+                                                        <td>{{ $author->firstName }}</td>
+                                                        <td>{{ $author->lastName }}</td>
                                                         <td>{{ $author->birthday }}</td>
                                                         <td>{{ $author->gender }}</td>
-                                                        <td>{{ $author->place_of_birth }}</td>
+                                                        <td>{{ $author->placeOfBirth }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
