@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return Factory|View|Application
+     */
     public function index(Request $request): Factory|View|Application
     {
         $authorsData = AuthorService::fetchData();
