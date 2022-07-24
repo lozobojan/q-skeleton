@@ -21,8 +21,7 @@
                                         <table class="table table-hover table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>First name</th>
-                                                    <th>Last name</th>
+                                                    <th>Full name</th>
                                                     <th>Birthday</th>
                                                     <th>Gender</th>
                                                     <th>Place of birth</th>
@@ -31,8 +30,9 @@
                                             <tbody>
                                                 @foreach($authors as $author)
                                                     <tr>
-                                                        <td>{{ $author->firstName }}</td>
-                                                        <td>{{ $author->lastName }}</td>
+                                                        <td>
+                                                            <a href="{{ route('authors.show', ['id' => $author->id]) }}">{{ $author->full_name }}</a>
+                                                        </td>
                                                         <td>{{ $author->birthday }}</td>
                                                         <td>{{ $author->gender }}</td>
                                                         <td>{{ $author->placeOfBirth }}</td>

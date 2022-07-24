@@ -14,9 +14,14 @@ class AuthorService
      * Try to find the cache hit ot fetch data from API and save to cache
      * @return Object|null
      */
-    public static function fetchData(Request $request) : ?Object
+    public static function fetchData(Request $request, int $id = null) : ?Object
     {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI);
+
+        // if fetching single user details
+        if(!is_null($id)){
+            $remoteApiService->appendUri("/$id");
+        }
         if($request->has('page')){
             $remoteApiService->appendUri("?page={$request->get('page')}");
         }

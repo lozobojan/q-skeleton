@@ -14,6 +14,7 @@ class AuthorsMapper
     public static function stdObjectToAuthor(Object $author): Author
     {
         return new Author(
+            $author->id,
             $author->first_name,
             $author->last_name,
             $author->birthday,

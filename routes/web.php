@@ -20,6 +20,7 @@ Route::group(['middleware' => ['auth']], function (){
 
     // author-related routes
     Route::get('authors', [AuthorController::class, 'index'])->name('authors.index');
+    Route::get('authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
 
     // book-related routes
     Route::get('books/create', [BookController::class, 'create'])->name('books.create');

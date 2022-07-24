@@ -30,4 +30,9 @@ class AuthorController extends Controller
             'routeName' => "authors.index"
         ]);
     }
+
+    public function show(Request $request, int $id = null){
+        $authorsData = AuthorService::fetchData($request, $id);
+        dd($authorsData);
+    }
 }
