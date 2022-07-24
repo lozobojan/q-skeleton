@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use JetBrains\PhpStorm\Pure;
 
 class Author extends Model
 {
@@ -35,7 +36,7 @@ class Author extends Model
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->birthday = Carbon::parse($birthday)->format('d.m.Y');
-        $this->gender = Str::upper($gender[0]);
+        $this->gender = $gender;
         $this->placeOfBirth = $placeOfBirth;
         $this->books = $books;
     }
@@ -43,5 +44,10 @@ class Author extends Model
     public function getFullNameAttribute(): string
     {
         return $this->firstName." ".$this->lastName;
+    }
+
+    #[Pure]
+    public function getGenderAbbrAttribute():string {
+        return Str::upper($this->gender[0]);
     }
 }

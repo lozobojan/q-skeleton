@@ -31,10 +31,10 @@
                                                 @foreach($authors as $author)
                                                     <tr>
                                                         <td>
-                                                            <a href="{{ route('authors.show', ['id' => $author->id]) }}">{{ $author->full_name }}</a>
+                                                            <a href="{{ route('authors.show', ['id' => $author->id]) }}">{{ $author->fullName }}</a>
                                                         </td>
                                                         <td>{{ $author->birthday }}</td>
-                                                        <td>{{ $author->gender }}</td>
+                                                        <td>{{ $author->genderAbbr }}</td>
                                                         <td>{{ $author->placeOfBirth }}</td>
                                                     </tr>
                                                 @endforeach

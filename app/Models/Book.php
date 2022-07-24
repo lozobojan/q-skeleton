@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,11 +33,17 @@ class Book extends Model
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
-        $this->releaseDate = $releaseDate;
+        $this->releaseDate = Carbon::parse($releaseDate)->format('d.m.Y');
         $this->isbn = $isbn;
         $this->format = $format;
         $this->numberOfPages = $numberOfPages;
     }
 
+    public function getDescriptionTrimAttribute(): string
+    {
+        return strlen($this->description) > 25
+            ? substr($this->description, 0, 25)."..."
+            : $this->description;
+    }
 
 }
