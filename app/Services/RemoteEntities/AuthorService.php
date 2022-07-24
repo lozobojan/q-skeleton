@@ -15,13 +15,17 @@ class AuthorService
      */
     public static function fetchData() : ?Object
     {
-        if(Cache::has('authorsData'))
-            return json_decode(Cache::get('authorsData'));
-
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI);
-        $remoteApiResponse = $remoteApiService->authorize()->request('GET');
 
-        Cache::put('authorsData', json_encode($remoteApiResponse), config('cache.ttl'));
+        // try to get cache hit
+        $endpointCacheKey = md5($remoteApiService->getUrl());
+        if(Cache::has($endpointCacheKey))
+            return json_decode(Cache::get($endpointCacheKey));
+
+        // if cache is not hit, fetch the data
+        $remoteApiResponse = $remoteApiService->authorize()->request('GET');
+        Cache::put($endpointCacheKey, json_encode($remoteApiResponse), config('cache.ttl'));
+
         return $remoteApiResponse;
     }
 
