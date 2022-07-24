@@ -30,9 +30,12 @@ class AuthController extends Controller
 
         if ($response->getStatusCode() == Response::HTTP_OK){
             $responseParsed = json_decode($response->getBody());
-            Session::put('bearerToken', $responseParsed->token_key);
 
-            redirect()->route('');
+            Session::put('bearerToken', $responseParsed->token_key);
+            Session::put('refreshToken', $responseParsed->refresh_token_key);
+            Session::put('userDetails', $responseParsed->user);
+
+            return redirect()->route('profile-view');
         }else{
             Session::flush();
             // TODO: throw custom exception
