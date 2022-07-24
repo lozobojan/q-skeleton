@@ -144,6 +144,11 @@ return [
     ],
 
     /*
+     * Define Skeleton API base url
+     */
+    'skeleton_api_base_url' => env('SKELETON_API_BASE_URL', "https://symfony-skeleton.q-tests.com"),
+
+    /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------

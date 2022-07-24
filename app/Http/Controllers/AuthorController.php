@@ -11,7 +11,7 @@ class AuthorController extends Controller
 {
     public function index(Request $request): Factory|View|Application
     {
-        // TODO: fetch authors and return for a drop-down menu
+        // TODO: fetch authors and return for the table
         return view('authors.index', [
 
         ]);

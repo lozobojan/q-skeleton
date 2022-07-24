@@ -4,43 +4,34 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use GuzzleHttp\Client;
+use App\Services\AuthService;
+use App\Services\RemoteApiService;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\HttpFoundation\Response as Response;
 
 class AuthController extends Controller
 {
     /**
-     * Attempt API login
-     *
+     * @param LoginRequest $request
+     * @return RedirectResponse
      * @throws GuzzleException
      */
-    public function login(LoginRequest $request){
+    public function login(LoginRequest $request): RedirectResponse
+    {
         // TODO: implement error messages in blade file
+        $credentials = $request->only(['email','password']);
 
-        $httpClient = new Client();
-        $response = $httpClient->post('https://symfony-skeleton.q-tests.com/api/v2/token', [
-                'json' => [
-                    'email' => $request->email,
-                    'password' => $request->password,
-                ]
-            ]
-        );
+        $remoteApiUrl = config('app.skeleton_api_base_url')."/api/v2/token";
+        $remoteApiService = new RemoteApiService($remoteApiUrl);
+        $remoteApiResponse = $remoteApiService->request('POST', $credentials);
 
-        if ($response->getStatusCode() == Response::HTTP_OK){
-            $responseParsed = json_decode($response->getBody());
-
-            Session::put('bearerToken', $responseParsed->token_key);
-            Session::put('refreshToken', $responseParsed->refresh_token_key);
-            Session::put('userDetails', $responseParsed->user);
-
+        if ($remoteApiResponse){
+            AuthService::saveLoginData($remoteApiResponse);
             return redirect()->route('profile-view');
         }else{
             Session::flush();
-            // TODO: throw custom exception
-            abort($response->getStatusCode());
+            return redirect()->route('auth.login-view');
         }
 
     }

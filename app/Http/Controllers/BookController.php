@@ -11,6 +11,9 @@ class BookController extends Controller
 {
     public function create(): Factory|View|Application
     {
-        return view('books.create');
+        // TODO: fetch authors and return for a drop-down menu
+        return view('books.create', [
+
+        ]);
     }
 }
