@@ -10,6 +10,7 @@ class Authenticate extends Middleware
 {
     public function handle($request, Closure $next, ...$guards)
     {
+        // TODO: compare expiration time and handle refreshing the token
         if(!Session::has('bearerToken') || is_null(Session::get('bearerToken'))){
             return redirect($this->redirectTo($request));
         }

@@ -9,12 +9,10 @@ class AuthorService
 {
     const API_AUTHORS_URI = "/api/v2/authors";
 
-    public static function fetchData(){
-
+    public static function fetchData() : ?Object
+    {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI);
-        $remoteApiResponse = $remoteApiService->authorize()->request('GET');
-
-        dd($remoteApiResponse);
+        return $remoteApiService->authorize()->request('GET');
     }
 
 }

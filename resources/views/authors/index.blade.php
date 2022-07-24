@@ -16,9 +16,30 @@
 
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-12 text-center">
+                                    <div class="col-12 text-center table-responsive">
 
-                                        <table></table>
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>First name</th>
+                                                    <th>Last name</th>
+                                                    <th>Birthday</th>
+                                                    <th>Gender</th>
+                                                    <th>Place of birth</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($authors->items as $author)
+                                                    <tr>
+                                                        <td>{{ $author->first_name }}</td>
+                                                        <td>{{ $author->last_name }}</td>
+                                                        <td>{{ $author->birthday }}</td>
+                                                        <td>{{ $author->gender }}</td>
+                                                        <td>{{ $author->place_of_birth }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
 
                                     </div>
                                 </div>

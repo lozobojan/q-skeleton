@@ -12,9 +12,8 @@ class AuthorController extends Controller
 {
     public function index(Request $request): Factory|View|Application
     {
-        $authors = AuthorService::fetchData();
         return view('authors.index', [
-
+            'authors' => AuthorService::fetchData()
         ]);
     }
 }
