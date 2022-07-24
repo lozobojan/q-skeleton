@@ -17,11 +17,17 @@ class AuthorController extends Controller
      */
     public function index(Request $request): Factory|View|Application
     {
-        $authorsData = AuthorService::fetchData();
+        $authorsData = AuthorService::fetchData($request);
 
-        // TODO: pagination
         return view('authors.index', [
             'authors' => AuthorsMapper::stdObjectsToAuthors($authorsData->items),
+            // pagination metadata
+            'totalResults' => $authorsData->total_results,
+            'displayedResults' => count($authorsData->items),
+            'totalPages' => $authorsData->total_pages,
+            'currentPage' => $authorsData->current_page,
+            'paginationLimit' => $authorsData->limit,
+            'routeName' => "authors.index"
         ]);
     }
 }

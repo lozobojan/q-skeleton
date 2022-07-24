@@ -41,6 +41,7 @@
                                             </tbody>
                                         </table>
 
+                                        @include('partials.pagination')
                                     </div>
                                 </div>
                             </div>

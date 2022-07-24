@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 
 class AuthService
 {
+
     // Define endpoint for auth token
     const API_TOKEN_URI = "/api/v2/token";
 
@@ -27,6 +28,7 @@ class AuthService
         return false;
     }
 
+    // TODO: save token and other details to redis
     /**
      * @param Object $data
      * @return void
