@@ -17,8 +17,7 @@ class AuthService
      */
     public static function login(array $credentials): bool
     {
-        $remoteApiUrl = config('app.skeleton_api_base_url').self::API_TOKEN_URI;
-        $remoteApiService = new RemoteApiService($remoteApiUrl);
+        $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_TOKEN_URI);
         $remoteApiResponse = $remoteApiService->request('POST', $credentials);
 
         if ($remoteApiResponse){

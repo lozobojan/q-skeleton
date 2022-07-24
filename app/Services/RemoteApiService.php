@@ -40,6 +40,17 @@ class RemoteApiService
     }
 
     /**
+     * append URI part to URL
+     * @param string $uri
+     * @return RemoteApiService
+     */
+    public function appendUri (string $uri): static
+    {
+        $this->url .= $uri;
+        return $this;
+    }
+
+    /**
      * Perform an HTTP request to the remote API
      * @param string $method
      * @param array $data
