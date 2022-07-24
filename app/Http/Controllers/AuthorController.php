@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\RemoteEntities\AuthorService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -11,7 +12,7 @@ class AuthorController extends Controller
 {
     public function index(Request $request): Factory|View|Application
     {
-        // TODO: fetch authors and return for the table
+        $authors = AuthorService::fetchData();
         return view('authors.index', [
 
         ]);

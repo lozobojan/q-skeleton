@@ -57,11 +57,14 @@ class RemoteApiService
      * @return void
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function request(string $method, array $data): ?Object{
+    public function request(string $method, array $data = [], array $headers = []): ?Object{
         $response = $this->httpClient->request(
             $method,
             $this->url,
-            count($data) > 0 ? [ 'json' => $data ] : []
+            [
+                'json' => $data,
+                'headers' => $headers
+            ]
         );
         if ($response->getStatusCode() == Response::HTTP_OK){
             return json_decode($response->getBody());
