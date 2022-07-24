@@ -15,7 +15,6 @@ class ProfileController extends Controller
      */
     public function displayProfile(): View|Factory|Application
     {
-        dd(Session::get('userDetails'));
         return view('profile', [
             "user" => Session::get('userDetails'),
         ]);
