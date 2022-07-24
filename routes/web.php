@@ -10,6 +10,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::group(['middleware' => ['auth']], function (){
     Route::get('profile', [ProfileController::class, 'displayProfile'])->name('profile-view');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::get('/', function () {

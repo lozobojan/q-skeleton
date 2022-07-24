@@ -21,7 +21,10 @@
 
                                 <div class="row mt-3">
                                     <div class="col-6 offset-3">
-                                        <a href="#" class="btn btn-danger btn-block">Logout</a>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button class="btn btn-danger btn-block">Logout</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

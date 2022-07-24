@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response as Response;
 
@@ -42,5 +43,16 @@ class AuthController extends Controller
             abort($response->getStatusCode());
         }
 
+    }
+
+    /**
+     * Perform user logout
+     *
+     * @return RedirectResponse
+     */
+    public function logout(): RedirectResponse
+    {
+        Session::flush();
+        return redirect()->route('auth.login-view');
     }
 }
