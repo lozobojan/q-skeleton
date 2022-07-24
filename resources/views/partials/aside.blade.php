@@ -22,9 +22,23 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="#" class="nav-link {{ request()->is('profile') ? 'active' : '' }}">
+                    <a href="{{ route('profile-view') }}" class="nav-link {{ request()->is('profile') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-alt"></i>
                         <p> Profile </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('authors.index') }}" class="nav-link {{ request()->is('authors*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p> Authors </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('books.create') }}" class="nav-link {{ request()->is('books*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book-open"></i>
+                        <p> Books </p>
                     </a>
                 </li>
             </ul>

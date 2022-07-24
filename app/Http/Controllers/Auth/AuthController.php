@@ -23,8 +23,8 @@ class AuthController extends Controller
         $httpClient = new Client();
         $response = $httpClient->post('https://symfony-skeleton.q-tests.com/api/v2/token', [
                 'json' => [
-                    'email' => 'ahsoka.tano@q.agency',
-                    'password' => 'Kryze4President',
+                    'email' => $request->email,
+                    'password' => $request->password,
                 ]
             ]
         );
