@@ -12,6 +12,8 @@ class AuthorService
 
     /**
      * Try to find the cache hit ot fetch data from API and save to cache
+     * @param Request $request
+     * @param int|null $id
      * @return Object|null
      */
     public static function fetchData(Request $request, int $id = null) : ?Object

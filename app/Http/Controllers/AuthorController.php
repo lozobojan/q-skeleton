@@ -32,7 +32,9 @@ class AuthorController extends Controller
     }
 
     public function show(Request $request, int $id = null){
-        $authorsData = AuthorService::fetchData($request, $id);
-        dd($authorsData);
+        $authorData = AuthorService::fetchData($request, $id);
+        return view('authors.show', [
+            'author' => $authorData
+        ]);
     }
 }
