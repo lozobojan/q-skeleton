@@ -31,7 +31,12 @@ class AuthorController extends Controller
         ]);
     }
 
-    public function show(Request $request, int $id = null){
+    /**
+     * @param Request $request
+     * @param int|null $id
+     * @return Factory|View|Application
+     */
+    public function show(Request $request, int $id = null): Factory|View|Application{
         $authorData = AuthorService::fetchData($request, $id);
         return view('authors.show', [
             'author' => $authorData
