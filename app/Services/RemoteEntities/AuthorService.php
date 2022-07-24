@@ -12,11 +12,9 @@ class AuthorService
     public static function fetchData(){
 
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI);
-        $remoteApiResponse = $remoteApiService->request('GET', [], [
-            "Authorization" => "Bearer ".Session::get('bearerToken')
-        ]);
+        $remoteApiResponse = $remoteApiService->authorize()->request('GET');
 
-
+        dd($remoteApiResponse);
     }
 
 }

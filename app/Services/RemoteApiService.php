@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response as Response;
 
 class RemoteApiService
 {
     private string $url;
     private Client $httpClient;
+    private bool $isAuthorized = false;
 
     /**
      * @param string $url
@@ -51,19 +53,41 @@ class RemoteApiService
     }
 
     /**
+     * HTTP request should be authorized
+     * @return $this
+     */
+    public function authorize(): static
+    {
+        $this->isAuthorized = true;
+        return $this;
+    }
+
+    /**
+     * generate headers for HTTP request
+     * @return array
+     */
+    public function generateHeaders(): array
+    {
+        return $this->isAuthorized ?
+            [
+                "Authorization" => "Bearer ".Session::get('bearerToken')
+            ] : [];
+    }
+
+    /**
      * Perform an HTTP request to the remote API
      * @param string $method
      * @param array $data
      * @return void
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function request(string $method, array $data = [], array $headers = []): ?Object{
+    public function request(string $method, array $data = []): ?Object{
         $response = $this->httpClient->request(
             $method,
             $this->url,
             [
                 'json' => $data,
-                'headers' => $headers
+                'headers' => $this->generateHeaders()
             ]
         );
         if ($response->getStatusCode() == Response::HTTP_OK){
