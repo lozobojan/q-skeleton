@@ -39,7 +39,7 @@ class AuthorController extends Controller
     public function show(Request $request, int $id = null): Factory|View|Application{
         $authorData = AuthorService::fetchData($request, $id);
         return view('authors.show', [
-            'author' => $authorData
+            'author' => AuthorsMapper::stdObjectToAuthor($authorData)
         ]);
     }
 }

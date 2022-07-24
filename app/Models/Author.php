@@ -17,6 +17,7 @@ class Author extends Model
     public string $birthday;
     public string $gender;
     public string $placeOfBirth;
+    public array $books = [];
 
     /**
      * @param int $id
@@ -25,8 +26,9 @@ class Author extends Model
      * @param string $birthday
      * @param string $gender
      * @param string $placeOfBirth
+     * @param array $books
      */
-    public function __construct(int $id, string $firstName, string $lastName, string $birthday, string $gender, string $placeOfBirth)
+    public function __construct(int $id, string $firstName, string $lastName, string $birthday, string $gender, string $placeOfBirth, array $books = [])
     {
         parent::__construct();
         $this->id = $id;
@@ -35,6 +37,7 @@ class Author extends Model
         $this->birthday = Carbon::parse($birthday)->format('d.m.Y');
         $this->gender = Str::upper($gender[0]);
         $this->placeOfBirth = $placeOfBirth;
+        $this->books = $books;
     }
 
     public function getFullNameAttribute(): string

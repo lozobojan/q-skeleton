@@ -20,6 +20,7 @@ class AuthorsMapper
             $author->birthday,
             $author->gender,
             $author->place_of_birth,
+            BooksMapper::stdObjectsToBooks($author->books)
         );
     }
 
