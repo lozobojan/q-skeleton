@@ -27,6 +27,10 @@ class BookController extends Controller
         ]);
     }
 
+    /**
+     * @param SaveBookRequest $request
+     * @return RedirectResponse
+     */
     public function save(SaveBookRequest $request): RedirectResponse{
         BookService::save(BooksMapper::requestToApiData($request));
         return redirect()->route("authors.show", ['id' => $request->get('authorId')]);
