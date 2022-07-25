@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveBookRequest;
 use App\Mappers\AuthorsMapper;
+use App\Mappers\BooksMapper;
 use App\Services\RemoteEntities\AuthorService;
 use App\Services\RemoteEntities\BookService;
 use Illuminate\Contracts\Foundation\Application;
@@ -27,9 +28,8 @@ class BookController extends Controller
     }
 
     public function save(SaveBookRequest $request): RedirectResponse{
-        dd($request->all());
-        BookService::save();
-        return redirect()->back();
+        BookService::save(BooksMapper::requestToApiData($request));
+        return redirect()->route("authors.show", ['id' => $request->get('authorId')]);
     }
 
     /**

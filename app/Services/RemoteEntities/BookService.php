@@ -21,9 +21,9 @@ class BookService
     }
 
 
-    public static function save() : void {
+    public static function save(array $bookData) : void {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_BOOKS_URI);
-        $remoteApiService->authorize()->request('POST');
+        $remoteApiService->authorize()->request('POST', $bookData);
         Cache::flush();
     }
 }
