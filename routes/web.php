@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Route;
 Route::view('/login', 'auth.login')->name('auth.login-view');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
+Route::get('clear-cache', function(){
+   \Illuminate\Support\Facades\Cache::flush();
+});
 
 // Routes that require auth
 Route::group(['middleware' => ['auth']], function (){
@@ -21,9 +24,11 @@ Route::group(['middleware' => ['auth']], function (){
     // author-related routes
     Route::get('authors', [AuthorController::class, 'index'])->name('authors.index');
     Route::get('authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
+    Route::delete('authors/{id}', [AuthorController::class, 'destroy'])->name('authors.delete');
 
     // book-related routes
     Route::get('books/create', [BookController::class, 'create'])->name('books.create');
+    Route::delete('books/{id}', [BookController::class, 'destroy'])->name('books.delete');
 });
 
 Route::get('/', function () {

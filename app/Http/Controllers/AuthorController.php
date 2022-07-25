@@ -7,6 +7,7 @@ use App\Services\RemoteEntities\AuthorService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -36,10 +37,20 @@ class AuthorController extends Controller
      * @param int|null $id
      * @return Factory|View|Application
      */
-    public function show(Request $request, int $id = null): Factory|View|Application{
+    public function show(Request $request, int $id): Factory|View|Application{
         $authorData = AuthorService::fetchData($request, $id);
         return view('authors.show', [
             'author' => AuthorsMapper::stdObjectToAuthor($authorData)
         ]);
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function destroy(int $id): RedirectResponse
+    {
+        AuthorService::delete($id);
+        return redirect()->route('authors.index');
     }
 }

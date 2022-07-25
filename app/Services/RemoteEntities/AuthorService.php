@@ -40,4 +40,14 @@ class AuthorService
         return $remoteApiResponse;
     }
 
+    /**
+     * Delete an author with ID
+     * @param int $id
+     * @return void
+     */
+    public static function delete(int $id) : void {
+        $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI."/".$id);
+        $remoteApiService->authorize()->request('DELETE');
+        Cache::flush();
+    }
 }
