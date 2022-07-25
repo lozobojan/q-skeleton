@@ -55,8 +55,7 @@
                                     <div class="row mt-3">
                                         <div class="col-12">
                                             <label for="description">Description:</label>
-                                            <textarea type="date" name="description" id="description" placeholder="Description" class="form-control" required>
-                                        </textarea>
+                                            <textarea type="date" name="description" id="description" placeholder="Description" class="form-control" required rows="4"></textarea>
                                         </div>
                                     </div>
 

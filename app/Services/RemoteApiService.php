@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response as Response;
 
 class RemoteApiService
@@ -70,7 +70,7 @@ class RemoteApiService
     {
         return $this->isAuthorized ?
             [
-                "Authorization" => "Bearer ".Session::get('bearerToken')
+                "Authorization" => "Bearer ".Cache::get('bearerToken')
             ] : [];
     }
 

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 
 class AuthService
 {
@@ -28,22 +28,24 @@ class AuthService
         return false;
     }
 
-    // TODO: save token and other details to redis
     /**
      * @param Object $data
      * @return void
      */
     public static function saveLoginData(Object $data): void{
-        Session::put('bearerToken', $data->token_key);
-        Session::put('refreshToken', $data->refresh_token_key);
-        Session::put('tokenExpiresAt', $data->expires_at);
-        Session::put('userDetails', $data->user);
+
+        $ttl = config('cache.auth_data_ttl', 86400);
+
+        Cache::put('bearerToken', $data->token_key, $ttl);
+        Cache::put('refreshToken', $data->refresh_token_key, $ttl);
+        Cache::put('tokenExpiresAt', $data->expires_at, $ttl);
+        Cache::put('userDetails', $data->user, $ttl);
     }
 
     /**
      * @return void
      */
     public static function logout(): void{
-        Session::flush();
+        Cache::flush();
     }
 }

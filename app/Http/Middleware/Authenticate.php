@@ -4,14 +4,14 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 
 class Authenticate extends Middleware
 {
     public function handle($request, Closure $next, ...$guards)
     {
         // TODO: compare expiration time and handle refreshing the token
-        if(!Session::has('bearerToken') || is_null(Session::get('bearerToken'))){
+        if(!Cache::has('bearerToken') || is_null(Cache::get('bearerToken'))){
             return redirect($this->redirectTo($request));
         }
         return $next($request);

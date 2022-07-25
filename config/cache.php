@@ -110,5 +110,10 @@ return [
     /*
      * Define cache TTL in seconds
      */
-    'ttl' => 600
+    'ttl' => 600,
+
+    /*
+     * Define cache TTL for auth data in seconds
+     */
+    'auth_data_ttl' => 86400,
 ];
