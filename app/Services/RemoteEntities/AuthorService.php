@@ -18,7 +18,7 @@ class AuthorService
      * @param bool $fetchAll
      * @return Object|null
      */
-    public static function fetchData(Request $request, int $id = null, bool $fetchAll = false) : ?Object
+    public function fetchData(Request $request, int $id = null, bool $fetchAll = false) : ?Object
     {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI);
 
@@ -27,7 +27,7 @@ class AuthorService
             $remoteApiService->appendUri("/$id");
 
         // try to get cache hit
-        self::appendRequestParams($request, $fetchAll, $remoteApiService);
+        $this->appendRequestParams($request, $fetchAll, $remoteApiService);
         $endpointCacheKey = md5($remoteApiService->getUrl());
 
         if(Cache::tags('apiData')->has($endpointCacheKey))
@@ -45,7 +45,7 @@ class AuthorService
      * @param bool $fetchAll
      * @param RemoteApiService $remoteApiService
      */
-    private static function appendRequestParams(Request $request, bool $fetchAll, RemoteApiService &$remoteApiService): void
+    private function appendRequestParams(Request $request, bool $fetchAll, RemoteApiService &$remoteApiService): void
     {
         $data = [];
         if($request->has('page'))
@@ -61,7 +61,7 @@ class AuthorService
      * @param array $authorData
      * @return void
      */
-    public static function save(array $authorData) : void {
+    public function save(array $authorData) : void {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI);
         $remoteApiService->authorize()->request('POST', $authorData);
         Cache::tags('apiData')->flush();
@@ -72,7 +72,7 @@ class AuthorService
      * @param int $id
      * @return void
      */
-    public static function delete(int $id) : void {
+    public function delete(int $id) : void {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI."/".$id);
         $remoteApiService->authorize()->request('DELETE');
         Cache::tags('apiData')->flush();

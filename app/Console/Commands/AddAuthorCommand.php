@@ -5,9 +5,18 @@ namespace App\Console\Commands;
 use App\Services\RemoteEntities\AuthorService;
 use Illuminate\Console\Command;
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 
 class AddAuthorCommand extends Command
 {
+
+    private AuthorService $authorService;
+
+    #[Pure]
+    public function __construct()
+    {
+        $this->authorService = new AuthorService();
+    }
     /**
      * The name and signature of the console command.
      *
@@ -33,7 +42,7 @@ class AddAuthorCommand extends Command
         $authorData = $this->getInputs();
         $this->info('Processing...');
 
-        AuthorService::save($authorData);
+        $this->authorService->save($authorData);
 
         $this->info('Author saved successfully!');
         return 0;

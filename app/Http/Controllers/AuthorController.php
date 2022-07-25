@@ -9,16 +9,24 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use JetBrains\PhpStorm\Pure;
 
 class AuthorController extends Controller
 {
+    private AuthorService $authorService;
+
+    #[Pure]
+    public function __construct()
+    {
+        $this->authorService = new AuthorService();
+    }
     /**
      * @param Request $request
      * @return Factory|View|Application
      */
     public function index(Request $request): Factory|View|Application
     {
-        $authorsData = AuthorService::fetchData($request);
+        $authorsData = $this->authorService->fetchData($request);
 
         return view('authors.index', [
             'authors' => AuthorsMapper::stdObjectsToAuthors($authorsData->items),
@@ -34,11 +42,11 @@ class AuthorController extends Controller
 
     /**
      * @param Request $request
-     * @param int|null $id
+     * @param int $id
      * @return Factory|View|Application
      */
     public function show(Request $request, int $id): Factory|View|Application{
-        $authorData = AuthorService::fetchData($request, $id);
+        $authorData = $this->authorService->fetchData($request, $id);
         return view('authors.show', [
             'author' => AuthorsMapper::stdObjectToAuthor($authorData)
         ]);
@@ -50,7 +58,7 @@ class AuthorController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        AuthorService::delete($id);
+        $this->authorService->delete($id);
         return redirect()->route('authors.index');
     }
 }
