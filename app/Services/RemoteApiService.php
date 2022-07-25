@@ -90,7 +90,7 @@ class RemoteApiService
                 'headers' => $this->generateHeaders()
             ]
         );
-        if ($response->getStatusCode() == Response::HTTP_OK){
+        if (in_array($response->getStatusCode(), [Response::HTTP_OK, Response::HTTP_NO_CONTENT])){
             return json_decode($response->getBody());
         }else{
             // TODO: throw custom exception
