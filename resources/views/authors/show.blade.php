@@ -90,10 +90,10 @@
                                                     <td>{{ $book->format }}</td>
                                                     <td>{{ $book->numberOfPages }}</td>
                                                     <td>
-                                                        <form action="{{ route('books.delete', ['id' => $book->id]) }}" method="POST" id="deleteBookForm">
+                                                        <form action="{{ route('books.delete', ['id' => $book->id]) }}" method="POST" id="deleteBookForm{{ $book->id }}">
                                                             @csrf
                                                             @method("DELETE")
-                                                            <button onclick="deleteBook(event)" class="btn btn-danger btn-sm"> x </button>
+                                                            <button onclick="deleteBook(event, {{ $book->id }})" class="btn btn-danger btn-sm"> x </button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -122,10 +122,10 @@
             }
         }
 
-        function deleteBook(event){
+        function deleteBook(event, id){
             event.preventDefault();
             if(confirm("Are you sure you want to delete the book?")){
-                document.getElementById('deleteBookForm').submit();
+                document.getElementById('deleteBookForm'+id).submit();
             }
         }
     </script>
