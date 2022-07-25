@@ -79,7 +79,6 @@ class RemoteApiService
     /**
      * @param Request $request
      * @param bool $fetchAll
-     * @param RemoteApiService $remoteApiService
      */
     public function appendRequestParams(Request $request, bool $fetchAll): void
     {
