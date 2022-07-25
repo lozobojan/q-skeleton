@@ -31,7 +31,7 @@ class AddAuthorCommand extends Command
      */
     protected $description = 'CLI command used for saving author details to remote API';
 
-    // TODO: save token to redis, commands do not use session
+
     /**
      * Execute the console command.
      *

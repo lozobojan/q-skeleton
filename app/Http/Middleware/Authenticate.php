@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Support\Facades\Cache;
@@ -10,8 +11,8 @@ class Authenticate extends Middleware
 {
     public function handle($request, Closure $next, ...$guards)
     {
-        // TODO: compare expiration time and handle refreshing the token
-        if(!Cache::tags('auth')->has('bearerToken') || is_null(Cache::tags('auth')->get('bearerToken'))){
+        // TODO: handle refreshing the token
+        if(!$this->checkApiAuth()){
             return redirect($this->redirectTo($request));
         }
         return $next($request);
@@ -28,5 +29,15 @@ class Authenticate extends Middleware
         if (! $request->expectsJson()) {
             return route('auth.login-view');
         }
+    }
+
+    /**
+     * @return bool
+     */
+    private function checkApiAuth(): bool{
+        return Cache::tags('auth')->has('bearerToken')
+            && !is_null(Cache::tags('auth')->get('bearerToken'))
+            && Cache::tags('auth')->has('tokenExpiresAt')
+            && Carbon::parse(Cache::tags('auth')->get('tokenExpiresAt'))->greaterThan(Carbon::now());
     }
 }
