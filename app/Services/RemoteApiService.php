@@ -4,6 +4,7 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response as Response;
 
@@ -73,6 +74,22 @@ class RemoteApiService
             [
                 "Authorization" => "Bearer ".Cache::tags('auth')->get('bearerToken')
             ] : [];
+    }
+
+    /**
+     * @param Request $request
+     * @param bool $fetchAll
+     * @param RemoteApiService $remoteApiService
+     */
+    public function appendRequestParams(Request $request, bool $fetchAll): void
+    {
+        $data = [];
+        if($request->has('page'))
+            $data['page'] = $request->get('page');
+        if($fetchAll)
+            $data['limit'] = PHP_INT_MAX;
+
+        $this->appendUri("?".http_build_query($data));
     }
 
     /**

@@ -10,7 +10,6 @@ class AuthorService
 {
     const API_AUTHORS_URI = "/api/v2/authors";
 
-    // TODO: consider refactoring into multiple methods
     /**
      * Try to find the cache hit ot fetch data from API and save to cache
      * @param Request $request
@@ -21,15 +20,10 @@ class AuthorService
     public function fetchData(Request $request, int $id = null, bool $fetchAll = false) : ?Object
     {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI);
-
-        // if fetching single user details
-        if(!is_null($id))
-            $remoteApiService->appendUri("/$id");
+        $this->prepareRemoteApiService($remoteApiService, $request, $fetchAll, $id);
 
         // try to get cache hit
-        $this->appendRequestParams($request, $fetchAll, $remoteApiService);
         $endpointCacheKey = md5($remoteApiService->getUrl());
-
         if(Cache::tags('apiData')->has($endpointCacheKey))
             return json_decode(Cache::tags('apiData')->get($endpointCacheKey));
 
@@ -38,22 +32,6 @@ class AuthorService
         Cache::tags('apiData')->put($endpointCacheKey, json_encode($remoteApiResponse), config('cache.ttl'));
 
         return $remoteApiResponse;
-    }
-
-    /**
-     * @param Request $request
-     * @param bool $fetchAll
-     * @param RemoteApiService $remoteApiService
-     */
-    private function appendRequestParams(Request $request, bool $fetchAll, RemoteApiService &$remoteApiService): void
-    {
-        $data = [];
-        if($request->has('page'))
-            $data['page'] = $request->get('page');
-        if($fetchAll)
-            $data['limit'] = PHP_INT_MAX;
-
-        $remoteApiService->appendUri("?".http_build_query($data));
     }
 
     /**
@@ -76,5 +54,20 @@ class AuthorService
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI."/".$id);
         $remoteApiService->authorize()->request('DELETE');
         Cache::tags('apiData')->flush();
+    }
+
+    /**
+     * @param RemoteApiService $remoteApiService
+     * @param Request $request
+     * @param bool $fetchAll
+     * @param int|null $id
+     * @return void
+     */
+    private function prepareRemoteApiService(RemoteApiService &$remoteApiService, Request $request, bool $fetchAll = false, int $id = null): void{
+        // if fetching single user details
+        if(!is_null($id))
+            $remoteApiService->appendUri("/$id");
+
+        $remoteApiService->appendRequestParams($request, $fetchAll);
     }
 }
