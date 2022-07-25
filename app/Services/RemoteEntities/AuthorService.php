@@ -15,6 +15,7 @@ class AuthorService
      * Try to find the cache hit ot fetch data from API and save to cache
      * @param Request $request
      * @param int|null $id
+     * @param bool $fetchAll
      * @return Object|null
      */
     public static function fetchData(Request $request, int $id = null, bool $fetchAll = false) : ?Object
@@ -42,6 +43,7 @@ class AuthorService
     /**
      * @param Request $request
      * @param bool $fetchAll
+     * @param RemoteApiService $remoteApiService
      */
     private static function appendRequestParams(Request $request, bool $fetchAll, RemoteApiService &$remoteApiService): void
     {
