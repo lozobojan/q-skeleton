@@ -19,4 +19,11 @@ class BookService
         $remoteApiService->authorize()->request('DELETE');
         Cache::flush();
     }
+
+
+    public static function save() : void {
+        $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_BOOKS_URI);
+        $remoteApiService->authorize()->request('POST');
+        Cache::flush();
+    }
 }

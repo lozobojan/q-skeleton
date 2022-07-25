@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth']], function (){
     // book-related routes
     Route::get('books/create', [BookController::class, 'create'])->name('books.create');
     Route::delete('books/{id}', [BookController::class, 'destroy'])->name('books.delete');
+    Route::post('books', [BookController::class, 'save'])->name('books.save');
 });
 
 Route::get('/', function () {
