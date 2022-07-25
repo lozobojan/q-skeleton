@@ -55,6 +55,17 @@ class AuthorService
     }
 
     /**
+     * Save author data to remote API
+     * @param array $authorData
+     * @return void
+     */
+    public static function save(array $authorData) : void {
+        $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI);
+        $remoteApiService->authorize()->request('POST', $authorData);
+        Cache::flush();
+    }
+
+    /**
      * Delete an author with ID
      * @param int $id
      * @return void
