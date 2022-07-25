@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response as Response;
 
@@ -70,7 +71,7 @@ class RemoteApiService
     {
         return $this->isAuthorized ?
             [
-                "Authorization" => "Bearer ".Cache::get('bearerToken')
+                "Authorization" => "Bearer ".Cache::tags('auth')->get('bearerToken')
             ] : [];
     }
 
@@ -78,8 +79,8 @@ class RemoteApiService
      * Perform an HTTP request to the remote API
      * @param string $method
      * @param array $data
-     * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return Object|null
+     * @throws GuzzleException
      */
     public function request(string $method, array $data = []): ?Object{
         $response = $this->httpClient->request(

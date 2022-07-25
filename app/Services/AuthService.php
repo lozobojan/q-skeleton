@@ -36,16 +36,16 @@ class AuthService
 
         $ttl = config('cache.auth_data_ttl', 86400);
 
-        Cache::put('bearerToken', $data->token_key, $ttl);
-        Cache::put('refreshToken', $data->refresh_token_key, $ttl);
-        Cache::put('tokenExpiresAt', $data->expires_at, $ttl);
-        Cache::put('userDetails', $data->user, $ttl);
+        Cache::tags('auth')->put('bearerToken', $data->token_key, $ttl);
+        Cache::tags('auth')->put('refreshToken', $data->refresh_token_key, $ttl);
+        Cache::tags('auth')->put('tokenExpiresAt', $data->expires_at, $ttl);
+        Cache::tags('auth')->put('userDetails', $data->user, $ttl);
     }
 
     /**
      * @return void
      */
     public static function logout(): void{
-        Cache::flush();
+        Cache::tags('auth')->flush();
     }
 }

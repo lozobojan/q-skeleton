@@ -6,8 +6,13 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::view('/login', 'auth.login')->name('auth.login-view');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
+Route::get('clear-cache', function(){
+   \Illuminate\Support\Facades\Cache::flush();
+});
 
 // Routes that require auth
 Route::group(['middleware' => ['auth']], function (){

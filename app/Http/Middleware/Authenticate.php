@@ -11,7 +11,7 @@ class Authenticate extends Middleware
     public function handle($request, Closure $next, ...$guards)
     {
         // TODO: compare expiration time and handle refreshing the token
-        if(!Cache::has('bearerToken') || is_null(Cache::get('bearerToken'))){
+        if(!Cache::tags('auth')->has('bearerToken') || is_null(Cache::tags('auth')->get('bearerToken'))){
             return redirect($this->redirectTo($request));
         }
         return $next($request);

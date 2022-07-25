@@ -17,7 +17,7 @@ class BookService
     public static function delete(int $id) : void {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_BOOKS_URI."/".$id);
         $remoteApiService->authorize()->request('DELETE');
-        Cache::flush();
+        Cache::tags('apiData')->flush();
     }
 
     /**
@@ -28,6 +28,6 @@ class BookService
     public static function save(array $bookData) : void {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_BOOKS_URI);
         $remoteApiService->authorize()->request('POST', $bookData);
-        Cache::flush();
+        Cache::tags('apiData')->flush();
     }
 }

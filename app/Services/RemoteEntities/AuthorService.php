@@ -29,12 +29,12 @@ class AuthorService
         self::appendRequestParams($request, $fetchAll, $remoteApiService);
         $endpointCacheKey = md5($remoteApiService->getUrl());
 
-        if(Cache::has($endpointCacheKey))
-            return json_decode(Cache::get($endpointCacheKey));
+        if(Cache::tags('apiData')->has($endpointCacheKey))
+            return json_decode(Cache::tags('apiData')->get($endpointCacheKey));
 
         // if cache is not hit, fetch the data
         $remoteApiResponse = $remoteApiService->authorize()->request('GET');
-        Cache::put($endpointCacheKey, json_encode($remoteApiResponse), config('cache.ttl'));
+        Cache::tags('apiData')->put($endpointCacheKey, json_encode($remoteApiResponse), config('cache.ttl'));
 
         return $remoteApiResponse;
     }
@@ -62,7 +62,7 @@ class AuthorService
     public static function save(array $authorData) : void {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI);
         $remoteApiService->authorize()->request('POST', $authorData);
-        Cache::flush();
+        Cache::tags('apiData')->flush();
     }
 
     /**
@@ -73,6 +73,6 @@ class AuthorService
     public static function delete(int $id) : void {
         $remoteApiService = app(RemoteApiService::class)->appendUri(self::API_AUTHORS_URI."/".$id);
         $remoteApiService->authorize()->request('DELETE');
-        Cache::flush();
+        Cache::tags('apiData')->flush();
     }
 }
