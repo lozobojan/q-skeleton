@@ -7,7 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Services\AuthService;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
@@ -27,7 +27,7 @@ class AuthController extends Controller
         if ($loginSuccessful){
             return redirect()->route('profile-view');
         }
-        Session::flush();
+        Cache::tags('auth')->flush();
         return redirect()->route('auth.login-view');
     }
 
