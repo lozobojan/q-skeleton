@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 
 class ProfileController extends Controller
 {
@@ -16,7 +16,7 @@ class ProfileController extends Controller
     public function displayProfile(): View|Factory|Application
     {
         return view('profile', [
-            "user" => Session::get('userDetails'),
+            "user" => Cache::tags('auth')->get('userDetails'),
         ]);
     }
 }
