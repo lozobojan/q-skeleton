@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/login', 'auth.login')->name('auth.login-view');
+Route::redirect("/", "/profile")->name('redirect.profile');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 // Routes that require auth
@@ -27,6 +28,3 @@ Route::group(['middleware' => ['auth']], function (){
     Route::post('books', [BookController::class, 'save'])->name('books.save');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
