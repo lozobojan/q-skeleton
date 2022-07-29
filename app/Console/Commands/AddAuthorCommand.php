@@ -15,6 +15,7 @@ class AddAuthorCommand extends Command
     #[Pure]
     public function __construct()
     {
+        parent::__construct();
         $this->authorService = new AuthorService();
     }
     /**
