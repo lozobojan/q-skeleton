@@ -16,9 +16,9 @@ class AuthorController extends Controller
     private AuthorService $authorService;
 
     #[Pure]
-    public function __construct()
+    public function __construct(AuthorService $authorService)
     {
-        $this->authorService = new AuthorService();
+        $this->authorService = $authorService;
     }
     /**
      * @param Request $request

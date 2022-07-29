@@ -20,10 +20,10 @@ class BookController extends Controller
     private AuthorService $authorService;
 
     #[Pure]
-    public function __construct()
+    public function __construct(BookService $bookService, AuthorService $authorService)
     {
-        $this->bookService = new BookService();
-        $this->authorService = new AuthorService();
+        $this->bookService = $bookService;
+        $this->authorService = $authorService;
     }
 
     /**
