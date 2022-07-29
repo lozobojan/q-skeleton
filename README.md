@@ -5,5 +5,8 @@ That means that Docker needs to be installed in order to run the app locally. Th
 
 After cloning the repository, navigate to the root project folder in a terminal and run:
     
+    composer install
+
     cp .env.example .env
+
     ./vendor/bin/sail up
